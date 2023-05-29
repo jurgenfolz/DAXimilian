@@ -1,6 +1,6 @@
 # DAXimilian
 
-This program provides a console interface for managing Tabular Models in Microsoft Analysis Services. It includes functionalities for adding columns and measures manually or from an Excel file.
+DAXimilian provides a console interface for managing Tabular Models in Power BI Microsoft Analysis Services. It was designed for adding columns and measures from an Excel file.
 
 ## Description
 
@@ -32,14 +32,6 @@ The artifacts can be either measures or calculated columns. The Excel file shoul
 
 Here's how to use option `2`:
 
-```csharp
-// Create an instance of the Tabular class
-Tabular tabular = new Tabular("server_address");
-
-// Choose option 2
-AddWithExcel(tabular);
-
-
 # Excel Reader
 
 The `ExcelREader` class provides a static method `ExcelToDataTable` that reads data from an Excel worksheet and converts it into a `DataTable`.
@@ -51,24 +43,6 @@ The `ExcelREader` class uses the EPPlus library to read an Excel file. The `Exce
 ## Method
 
 - `ExcelToDataTable(string path)`: This method reads the data from the first worksheet of an Excel file given its path and converts it into a `DataTable`.
-
-## Usage
-
-To use this class, you can simply call the `ExcelToDataTable` method with the path to your Excel file as follows:
-
-```csharp
-string path = @"C:\path\to\your\excel\file.xlsx";
-DataTable dt = ExcelREader.ExcelToDataTable(path);
-
-foreach (DataRow row in dt.Rows)
-{
-    foreach (var item in row.ItemArray)
-    {
-        Console.Write($"{item} ");
-    }
-    Console.WriteLine();
-}
-
 
 
 # DAXCreator
@@ -93,28 +67,6 @@ The `Tabular` class establishes a connection to a server, then retrieves and int
 
 - `DeleteCalculatedColumns()`: Method for deleting all calculated columns in the model.
 
-## Usage
-
-Here's how you can use the `Tabular` class to interact with your Tabular model:
-
-```csharp
-// Create an instance of the Tabular class
-Tabular tabular = new Tabular("server_address");
-
-// Read artifacts
-tabular.ReadArtifacts();
-
-// Print artifacts
-tabular.PrintArtifacts();
-
-// Add a measure
-tabular.AddMeasure("Sales", "Total Sales", "SUM('Sales'[Amount])");
-
-// Add a calculated column
-tabular.AddCalculatedColumn("Sales", "Profit", "[Revenue] - [Cost]");
-
-// Delete calculated columns
-tabular.DeleteCalculatedColumns();
 
 # ServerFinder
 
@@ -134,9 +86,47 @@ This class provides a method to retrieve the localhost address of the PowerBI se
 
 ## Usage
 
-To use this class, you can simply create an instance and call the `FindServer` method. Here is an example:
 
 ```csharp
+// Create an instance of the Tabular class
+Tabular tabular = new Tabular("server_address");
+
+// Choose option 2
+AddWithExcel(tabular);
+
+// Excel reader
+string path = @"C:\path\to\your\excel\file.xlsx";
+DataTable dt = ExcelREader.ExcelToDataTable(path);
+
+foreach (DataRow row in dt.Rows)
+{
+    foreach (var item in row.ItemArray)
+    {
+        Console.Write($"{item} ");
+    }
+    Console.WriteLine();
+}
+
+//Daxcreator
+// Create an instance of the Tabular class
+Tabular tabular = new Tabular("server_address");
+
+// Read artifacts
+tabular.ReadArtifacts();
+
+// Print artifacts
+tabular.PrintArtifacts();
+
+// Add a measure
+tabular.AddMeasure("Sales", "Total Sales", "SUM('Sales'[Amount])");
+
+// Add a calculated column
+tabular.AddCalculatedColumn("Sales", "Profit", "[Revenue] - [Cost]");
+
+// Delete calculated columns
+tabular.DeleteCalculatedColumns();
+
+//Server finder
 ServerFinder serverFinder = new ServerFinder();
 string serverAddress = serverFinder.FindServer();
 
